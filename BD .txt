@@ -1,0 +1,118 @@
+CREATE TABLE Descuentos(
+idDescuentos INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+porcentaje FLOAT NOT NULL,
+FechaInicio DATETIME NOT NULL,
+FechaTermino DATETIME NOT null
+);
+
+CREATE TABLE Seccion(
+idSeccion INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+iddescuentos INT UNSIGNED NOT NULL,
+FOREIGN KEY (idDescuentos) REFERENCES Descuentos(idDescuentos),
+nombre VARCHAR(45) NOT null
+);
+
+CREATE TABLE Rubro(
+idRubro INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+Seccion INT UNSIGNED NOT NULL,
+FOREIGN KEY (Seccion) REFERENCES Seccion(idSeccion),
+CategoriaRubro VARCHAR(45) NOT null
+);
+CREATE TABLE SubRubro(
+idRubro INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+Rubro INT UNSIGNED NOT NULL,
+FOREIGN KEY (Rubro) REFERENCES Rubro(idRubro),
+categoria VARCHAR(45) NOT NULL
+);
+
+ CREATE TABLE proveedor(
+ idProveedor INT UNSIGNED NOT NULL auto_increment PRIMARY KEY,
+ Rut VARCHAR(14) NOT NULL UNIQUE,
+ comuna INT  NOT NULL,
+ FOREIGN KEY(comuna) REFERENCES comunas(Id_comuna),
+ nombre VARCHAR(45) NOT NULL,
+ telefono VARCHAR(15) NOT NULL,
+ direccion VARCHAR(45) NOT null,
+ numero INT UNSIGNED NOT NULL,
+ Correo VARCHAR(45) NOT NULL,
+ 
+ );
+
+CREATE TABLE Productos(
+idProductos INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+Proveedor INT UNSIGNED NOT NULL,
+SubRubro INT UNSIGNED NOT NULL,
+FOREIGN KEY(Proveedor) REFERENCES proveedor(idProveedor),
+FOREIGN KEY(SubRubro) REFERENCES SubRubro(idRubro),
+codigoBarra VARCHAR(45) NOT NULL,
+Descripcion VARCHAR(45) NOT NULL,
+Gramage INT UNSIGNED NOT NULL,
+medida VARCHAR(45) NOT NULL,
+PrecioUnitario INT UNSIGNED NOT NULL,
+Stock INT UNSIGNED NOT null,
+estado tinyint not null default 1
+); 
+
+
+CREATE view v_productos
+as
+SELECT pr.idProductos, p.nombre, s.categoria, pr.codigoBarra, pr.Descripcion, pr.Gramage, pr.medida, pr.PrecioUnitario, pr.Stock,pr.estado
+FROM productos pr
+INNER JOIN proveedor p ON pr.Proveedor = p.idProveedor
+INNER JOIN subrubro s ON pr.SubRubro = s.idRubro
+
+SELECT * FROM v_productos;
+SELECT * FROM proveedor;
+
+delimiter $$
+CREATE PROCEDURE Agregar_producto(IN prov INT,IN sub INT,IN codigo VARCHAR(45),in descr VARCHAR(45),IN gramo INT,IN med VARCHAR(45),IN precio INT, IN stock int)
+
+
+BEGIN
+INSERT INTO productos(Proveedor,SubRubro,codigoBarra,Descripcion,Gramage,Medida,PrecioUnitario,Stock) VALUES (prov, sub, codigo, descr, gramo,med,precio,stock);
+
+END $$
+
+CALL Agregar_producto(2,1,1111211,"fideos buena marca",500,"g",500,20);
+SELECT * FROM subrubro;
+
+delimiter $$
+CREATE PROCEDURE Agregar_Proveedor(IN rut VARCHAR(14),IN comuna INT,IN nombre VARCHAR(45),in telefono VARCHAR(15),IN direc VARCHAR(45),IN numero int,IN correo VARCHAR(45))
+
+
+BEGIN
+INSERT INTO proveedor(Rut,comuna,nombre,telefono,direccion,numero,Correo) VALUES (rut, comuna, nombre, telefono, direc,numero,correo);
+
+END $$
+
+CALL Agregar_Proveedor("76.330.318-7",44,"OS Chile Editorial Limitada",987456475,"Calle inventada",354,"Editorial@gmail.com");}
+
+CREATE view V_Secciones
+as
+SELECT  S.nombre seccion,Ru.CategoriaRubro
+FROM seccion S
+INNER JOIN rubro Ru ON S.idSeccion=Ru.idRubro
+ SELECT *FROM productos;
+ 
+ delimiter $$
+CREATE PROCEDURE Actualizar_Productos(in id int,IN nom VARCHAR(45),IN cat VARCHAR(45),IN cod VARCHAR(45),IN descu VARCHAR(45),IN gramo INT,IN med VARCHAR(45),IN precio INT, IN stock INT)
+
+BEGIN 
+UPDATE productos
+SET Proveedor= nom,SubRubro= cat,codigoBarra= cod,Descripcion= descu,Gramage= gramo,medida= med,PrecioUnitario= precio, Stock=stock
+WHERE idProductos = id;
+
+END$$
+
+CALL Actualizar_Productos(1,2,2,"2222222","Comida de perro Dog Chow",13,"KG",40000,30);
+SELECT* FROM productos;
+
+ delimiter $$
+CREATE PROCEDURE eliminar_Productos(in id INT)
+
+BEGIN 
+UPDATE productos
+SET estado= 0
+WHERE idProductos = id;
+
+END$$
