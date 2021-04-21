@@ -1,0 +1,58 @@
+<div class="container p-4">
+    <h2 style="text-align: center;">Agregar Proveedor</h2>
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" autocomplete="off" onsubmit="return validarFormulario()" >
+                    <div class="form-group">
+                            <input type="text" class="form-control" id="rut" name="rut" placeholder="RUT" autofocus
+                                aria-autocomplete="none" oninput="checkRut(this)" required>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="region" name="REGION">
+                             <option value="0">Seleccione su región...</option>
+                             {{#each regiones}}
+                                <option value={{Id_Region}}>{{Nombre}}</option>
+                             {{/each}}
+
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" id="comunas" name="comuna">
+                             <option value="0">Seleccione su comuna...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required>
+                            <div id="paterno_error" style="font-size:14px; color:#FF0000;"></div>
+                        </div>
+                         <div class="form-group">
+                            <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Telefono Ej:987647382" required>
+                            <div id="materno_error" style="font-size:14px; color:#FF0000;"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="direc" name="direc" placeholder="Dirección" required>
+                            <div id="materno_error" style="font-size:14px; color:#FF0000;"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="numero" name="numero" placeholder="numero" required>
+                            <div id="materno_error" style="font-size:14px; color:#FF0000;"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="correo" name="correo" placeholder="Correo" required>
+                            <div id="materno_error" style="font-size:14px; color:#FF0000;"></div>
+                        </div>
+                        
+
+                        <div class="form-group">
+                            <button class="btn btn-success btn-block">
+                                Agregar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

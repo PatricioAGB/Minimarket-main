@@ -1,0 +1,68 @@
+<div class="container p-4 mx-auto">
+    <h2>Productos</h2>
+    <br>
+<table class="table table-hover" id="tablaCliente">
+  
+    <tbody>
+   
+ <form class="form-inline my-2 my-lg-0">
+                        
+                        <div class="input-group">
+
+                            <input type="text" class="form-control" id="cliente" placeholder="Buscar Producto" />
+                          
+
+                        </div>
+                    </form>
+                    <br>
+  <thead>
+    <th>Cod.Int</th>
+    <th>Proveedor</th>
+    <th>SubRubro</th>
+    <th>codigoBarra</th>
+    <th>Descripcion</th>
+    <th>Gramage</th>
+    <th>medida</th>
+    <th>PrecioUnitario</th>
+    <th>Stock</th>
+    <th>  <a href='productos/AgregarProductos' class="edit" title="Agregar" data-toggle="tooltip"><i class="fas fa-plus"></i></a></th>
+    <th colspan="3"></th>
+      </thead>  
+    
+
+    {{#each productos}}
+        <tr>
+            <td>  {{idProductos}}</td>
+            <td>  {{nombre}}</td>
+            <td>  {{categoria}}</td>
+            <td>  {{codigoBarra}}</td>
+            <td>  {{Descripcion}}</td>
+            <td>  {{Gramage}}</td>
+            <td>  {{medida}}</td>
+            <td>  {{PrecioUnitario}}</td>
+            <td>  {{Stock}}</td>
+           
+
+
+            <td>  <a href='productos/editarProductos/{{idProductos}}' class="edit" title="Actualizar" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a></td>
+            <td>  <a href='productos/eliminarProductos/{{idProductos}}'  class="delete" title="Eliminar" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a> </td>
+        </tr>
+    {{/each}}
+    
+
+</tbody>
+
+</table>
+<div class="clearfix">
+                <div class="hint-text">Mostrando <b>5</b> de <b>25</b> entradas</div>
+                <ul class="pagination">
+                    <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
+                    <li class="page-item active"><a href="#" class="page-link">1</a></li>
+                    <li class="page-item"><a href="#" class="page-link">2</a></li>
+                    <li class="page-item"><a href="#" class="page-link">3</a></li>
+                    <li class="page-item"><a href="#" class="page-link">4</a></li>
+                    <li class="page-item"><a href="#" class="page-link">5</a></li>
+                    <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
+                </ul>
+            </div>
+</div>
